@@ -1,0 +1,147 @@
+{
+  "Examples": [
+    {
+      "Order": 1,
+      "Title": "Cancel export request",
+      "Slug": "cancelexportrequest",
+      "Description": "Generated from OpenAPI examples.",
+      "Language": "http",
+      "Code": "### Cancel export request\n# @name cancelExportRequest\nDELETE {{host}}/api/v1/skybox/export/{{id}}\nx-api-key: {{api_key}}\nAccept: application/json\n\n## Responses\n# 200\n# Content-Type: application/json",
+      "Format": "http",
+      "OperationId": "cancelExportRequest",
+      "Setup": null
+    },
+    {
+      "Order": 2,
+      "Title": "Get export request",
+      "Slug": "getexportrequest",
+      "Description": "Generated from OpenAPI examples.",
+      "Language": "http",
+      "Code": "### Get export request\n# @name getExportRequest\nGET {{host}}/api/v1/skybox/export/{{id}}\nx-api-key: {{api_key}}\nAccept: application/json\n\n## Responses\n# 200\n# Content-Type: application/json",
+      "Format": "http",
+      "OperationId": "getExportRequest",
+      "Setup": null
+    },
+    {
+      "Order": 3,
+      "Title": "Get Export Types",
+      "Slug": "getexporttypes",
+      "Description": "Returns the list of all available export types.",
+      "Language": "csharp",
+      "Code": "using var client = new BlockadeLabsClient(apiKey);\nvar response = await client.SkyboxExports.GetExportTypesAsync();\n\n// Example response:\n// [\n//   {\n//     \u0022id\u0022: 1,\n//     \u0022name\u0022: \u0022JPG\u0022,\n//     \u0022key\u0022: \u0022equirectangular-jpg\u0022,\n//     \u0022premium_feature\u0022: false\n//   },\n//   {\n//     \u0022id\u0022: 2,\n//     \u0022name\u0022: \u0022PNG\u0022,\n//     \u0022key\u0022: \u0022equirectangular-png\u0022,\n//     \u0022premium_feature\u0022: false\n//   },\n//   {\n//     \u0022id\u0022: 3,\n//     \u0022name\u0022: \u0022Cube Map\u0022,\n//     \u0022key\u0022: \u0022cube-map-png\u0022,\n//     \u0022premium_feature\u0022: true\n//   },\n//   {\n//     \u0022id\u0022: 4,\n//     \u0022name\u0022: \u0022HDRI HDR\u0022,\n//     \u0022key\u0022: \u0022hdri-hdr\u0022,\n//     \u0022premium_feature\u0022: true\n//   },\n//   {\n//     \u0022id\u0022: 5,\n//     \u0022name\u0022: \u0022HDRI EXR\u0022,\n//     \u0022key\u0022: \u0022hdri-exr\u0022,\n//     \u0022premium_feature\u0022: true\n//   },\n//   {\n//     \u0022id\u0022: 6,\n//     \u0022name\u0022: \u0022Depth Map\u0022,\n//     \u0022key\u0022: \u0022depth-map-png\u0022,\n//     \u0022premium_feature\u0022: true\n//   },\n//   {\n//     \u0022id\u0022: 7,\n//     \u0022name\u0022: \u0022Video Landscape\u0022,\n//     \u0022key\u0022: \u0022video-landscape-mp4\u0022,\n//     \u0022premium_feature\u0022: true\n//   },\n//   {\n//     \u0022id\u0022: 8,\n//     \u0022name\u0022: \u0022Video Portrait\u0022,\n//     \u0022key\u0022: \u0022video-portrait-mp4\u0022,\n//     \u0022premium_feature\u0022: true\n//   },\n//   {\n//     \u0022id\u0022: 9,\n//     \u0022name\u0022: \u0022Video Square\u0022,\n//     \u0022key\u0022: \u0022video-square-mp4\u0022,\n//     \u0022premium_feature\u0022: true\n//   }\n// ]",
+      "Format": "sdk",
+      "OperationId": "getExportTypes",
+      "Setup": "This example assumes \u0060using BlockadeLabs;\u0060 is in scope and \u0060apiKey\u0060 contains the required credential."
+    },
+    {
+      "Order": 4,
+      "Title": "Request Export",
+      "Slug": "requestexport",
+      "Description": "Process for tracking export progress is identical to tracking skybox generation by using Pusher, Webhook or API Data pooling.\n\nIf the export request has already been completed you will immediately get a response with status=complete and file_url in the response.",
+      "Language": "http",
+      "Code": "### Request Export\n# @name requestExport\nPOST {{host}}/api/v1/skybox/export\nx-api-key: {{api_key}}\nContent-Type: application/json\nAccept: application/json\n\n{\n  \u0022skybox_id\u0022: \u0022f87f6a4b3784591795bfed30100a9ef6\u0022,\n  \u0022type_id\u0022: 2,\n  \u0022webhook_url\u0022: \u0022\u0022\n}\n\n## Responses\n# 200\n# Content-Type: application/json",
+      "Format": "http",
+      "OperationId": "requestExport",
+      "Setup": null
+    },
+    {
+      "Order": 5,
+      "Title": "Cancel All Pending Generations",
+      "Slug": "cancelallpendinggenerations",
+      "Description": "This request sets the status of all pending generations to abort.",
+      "Language": "csharp",
+      "Code": "using var client = new BlockadeLabsClient(apiKey);\nvar response = await client.Skyboxes.CancelAllPendingGenerationsAsync();\n\n// Example response:\n// {\n//   \u0022success\u0022: true\n// }",
+      "Format": "sdk",
+      "OperationId": "cancelAllPendingGenerations",
+      "Setup": "This example assumes \u0060using BlockadeLabs;\u0060 is in scope and \u0060apiKey\u0060 contains the required credential."
+    },
+    {
+      "Order": 6,
+      "Title": "Cancel Generation",
+      "Slug": "cancelgeneration",
+      "Description": "This request sets the status to the abort value.",
+      "Language": "http",
+      "Code": "### Cancel Generation\n# @name cancelGeneration\nDELETE {{host}}/api/v1/imagine/requests/{{id}}\nx-api-key: {{api_key}}\nAccept: application/json\n\n## Responses\n# 200\n# Content-Type: application/json",
+      "Format": "http",
+      "OperationId": "cancelGeneration",
+      "Setup": null
+    },
+    {
+      "Order": 7,
+      "Title": "Delete",
+      "Slug": "delete",
+      "Description": "This request deletes skybox.",
+      "Language": "http",
+      "Code": "### Delete\n# @name delete\nDELETE {{host}}/api/v1/imagine/deleteImagine/{{id}}\nx-api-key: {{api_key}}\nAccept: application/json\n\n## Responses\n# 200\n# Content-Type: application/json",
+      "Format": "http",
+      "OperationId": "delete",
+      "Setup": null
+    },
+    {
+      "Order": 8,
+      "Title": "Generate Skybox",
+      "Slug": "generateskybox",
+      "Description": "Used for generating skyboxes, skybox remixes and depth maps.",
+      "Language": "http",
+      "Code": "### Generate Skybox\n# @name generateSkybox\nPOST {{host}}/api/v1/skybox\nx-api-key: {{api_key}}\nContent-Type: multipart/form-data\nAccept: application/json\n\n## Responses\n# 200\n# Content-Type: application/json",
+      "Format": "http",
+      "OperationId": "generateSkybox",
+      "Setup": null
+    },
+    {
+      "Order": 9,
+      "Title": "Get History",
+      "Slug": "gethistory",
+      "Description": "Generated from OpenAPI examples.",
+      "Language": "csharp",
+      "Code": "using var client = new BlockadeLabsClient(apiKey);\n\nvar response = await client.Skyboxes.GetHistoryAsync(\n    status: \u0022\u0022,\n    limit: \u0022\u0022,\n    offset: \u0022\u0022,\n    order: \u0022\u0022,\n    imagineId: \u0022\u0022,\n    query: \u0022\u0022,\n    generator: \u0022\u0022\n);\n\n// Example response:\n// {\n//   \u0022data\u0022: [\n//     {\n//       \u0022id\u0022: 8442285,\n//       \u0022obfuscated_id\u0022: \u0022f87f6a4b3784591795bfed30100a9ef6\u0022,\n//       \u0022user_id\u0022: 1352,\n//       \u0022title\u0022: \u0022World #8442285\u0022,\n//       \u0022prompt\u0022: \u0022dark forest\u0022,\n//       \u0022seed\u0022: 32061051,\n//       \u0022negative_text\u0022: \u0022openapi-json-null-sentinel-value-2BF93600-0FE4-4250-987A-E5DDB203E464\u0022,\n//       \u0022username\u0022: \u0022test\u0022,\n//       \u0022status\u0022: \u0022complete\u0022,\n//       \u0022queue_position\u0022: 0,\n//       \u0022file_url\u0022: \u0022https://blockade-platform-production.s3.amazonaws.com/images/imagine/vr360-intricate-fantasy-art-dark-forest-vr360-c4d-computer-r_8442285.jpg?ver=1\u0022,\n//       \u0022thumb_url\u0022: \u0022https://blockade-platform-production.s3.amazonaws.com/thumbs/imagine/thumb_vr360-intricate-fantasy-art-dark-forest-vr360-c4d-computer-r_8442285.jpg?ver=1\u0022,\n//       \u0022depth_map_url\u0022: \u0022https://blockade-platform-production.s3.amazonaws.com/depths/imagine/vr360-intricate-fantasy-art-dark-forest-vr360-c4d-computer-r_8442285_depth-map.jpg?ver=1\u0022,\n//       \u0022remix_imagine_id\u0022: \u0022openapi-json-null-sentinel-value-2BF93600-0FE4-4250-987A-E5DDB203E464\u0022,\n//       \u0022remix_obfuscated_id\u0022: \u0022openapi-json-null-sentinel-value-2BF93600-0FE4-4250-987A-E5DDB203E464\u0022,\n//       \u0022isMyFavorite\u0022: false,\n//       \u0022created_at\u0022: \u00222023-08-23T08:51:55\\u002B00:00\u0022,\n//       \u0022updated_at\u0022: \u00222023-08-23T08:52:10\\u002B00:00\u0022,\n//       \u0022error_message\u0022: \u0022openapi-json-null-sentinel-value-2BF93600-0FE4-4250-987A-E5DDB203E464\u0022,\n//       \u0022pusher_channel\u0022: \u0022status_update_f87f6a4b3784591795bfed30100a9ef6\u0022,\n//       \u0022pusher_event\u0022: \u0022status_update\u0022,\n//       \u0022type\u0022: \u0022skybox\u0022,\n//       \u0022skybox_style_id\u0022: 2,\n//       \u0022skybox_id\u0022: 2,\n//       \u0022skybox_style_name\u0022: \u0022Fantasy\u0022,\n//       \u0022skybox_name\u0022: \u0022Fantasy\u0022,\n//       \u0022dispatched_at\u0022: \u00222023-08-23T08:51:56\\u002B00:00\u0022,\n//       \u0022processing_at\u0022: \u00222023-08-23T08:51:56\\u002B00:00\u0022,\n//       \u0022completed_at\u0022: \u00222023-08-23T08:52:10\\u002B00:00\u0022\n//     }\n//   ],\n//   \u0022totalCount\u0022: 18,\n//   \u0022has_more\u0022: true\n// }",
+      "Format": "sdk",
+      "OperationId": "getHistory",
+      "Setup": "This example assumes \u0060using BlockadeLabs;\u0060 is in scope and \u0060apiKey\u0060 contains the required credential."
+    },
+    {
+      "Order": 10,
+      "Title": "Get Skybox by id",
+      "Slug": "getskyboxbyid",
+      "Description": "Generated from OpenAPI examples.",
+      "Language": "http",
+      "Code": "### Get Skybox by id\n# @name getSkyboxById\nGET {{host}}/api/v1/imagine/requests/{{id}}\nx-api-key: {{api_key}}\nAccept: application/json\n\n## Responses\n# 200\n# Content-Type: application/json",
+      "Format": "http",
+      "OperationId": "getSkyboxById",
+      "Setup": null
+    },
+    {
+      "Order": 11,
+      "Title": "Get Skybox by Obfuscated id",
+      "Slug": "getskyboxbyobfuscatedid",
+      "Description": "Generated from OpenAPI examples.",
+      "Language": "http",
+      "Code": "### Get Skybox by Obfuscated id\n# @name getSkyboxByObfuscatedId\nGET {{host}}/api/v1/imagine/requests/obfuscated-id/{{obfuscatedId}}\nx-api-key: {{api_key}}\nAccept: application/json\n\n## Responses\n# 200\n# Content-Type: application/json",
+      "Format": "http",
+      "OperationId": "getSkyboxByObfuscatedId",
+      "Setup": null
+    },
+    {
+      "Order": 12,
+      "Title": "Get Skybox Style Families",
+      "Slug": "getskyboxstylefamilies",
+      "Description": "Returns the list of predefined styles that can influence the overall aesthetic of your skybox generation, sorted by style family. This route can be used in order to build a menu of styles sorted by family.",
+      "Language": "csharp",
+      "Code": "using var client = new BlockadeLabsClient(apiKey);\nvar response = await client.Skyboxes.GetSkyboxStyleFamiliesAsync();\n\n// Example response:\n// [\n//   {\n//     \u0022type\u0022: \u0022family\u0022,\n//     \u0022id\u0022: 17,\n//     \u0022name\u0022: \u0022Model 3 Realistic\u0022,\n//     \u0022sort_order\u0022: 1,\n//     \u0022items\u0022: [\n//       {\n//         \u0022type\u0022: \u0022style\u0022,\n//         \u0022id\u0022: 119,\n//         \u0022name\u0022: \u0022M3 Photoreal (Featured)\u0022,\n//         \u0022sort_order\u0022: 1,\n//         \u0022description\u0022: \u0022Photographic realism with a high degree of flexibility and good visual fidelity\u0022,\n//         \u0022max-char\u0022: 600,\n//         \u0022negative-text-max-char\u0022: 410,\n//         \u0022image\u0022: \u0022https://images.blockadelabs.com/images/skybox/WJgTolgUIXCDZM5LOTeUR2T8IOfZHnq2OQzozqH0.webp\u0022,\n//         \u0022image_jpg\u0022: \u0022https://images.blockadelabs.com/images/skybox/WJgTolgUIXCDZM5LOTeUR2T8IOfZHnq2OQzozqH0.jpg\u0022,\n//         \u0022model\u0022: \u0022Model 3\u0022,\n//         \u0022model_version\u0022: \u00223\u0022\n//       },\n//       {\n//         \u0022type\u0022: \u0022style\u0022,\n//         \u0022id\u0022: 102,\n//         \u0022name\u0022: \u0022M3 Cinematic Realism\u0022,\n//         \u0022sort_order\u0022: 2,\n//         \u0022description\u0022: \u0022Photographic realism with dramatic, dark color grading and filmic mood\u0022,\n//         \u0022max-char\u0022: 600,\n//         \u0022negative-text-max-char\u0022: 430,\n//         \u0022image\u0022: \u0022https://images.blockadelabs.com/images/skybox/gGfOHzfOiAgvkVxHVtg6TDNwWa22SvTluHoRJNTK.webp\u0022,\n//         \u0022image_jpg\u0022: \u0022https://images.blockadelabs.com/images/skybox/gGfOHzfOiAgvkVxHVtg6TDNwWa22SvTluHoRJNTK.jpg\u0022,\n//         \u0022model\u0022: \u0022Model 3\u0022,\n//         \u0022model_version\u0022: \u00223\u0022\n//       }\n//     ]\n//   },\n//   {\n//     \u0022type\u0022: \u0022style\u0022,\n//     \u0022id\u0022: 13,\n//     \u0022name\u0022: \u0022Advanced (no style)\u0022,\n//     \u0022sort_order\u0022: 17,\n//     \u0022description\u0022: \u0022openapi-json-null-sentinel-value-2BF93600-0FE4-4250-987A-E5DDB203E464\u0022,\n//     \u0022max-char\u0022: 540,\n//     \u0022negative-text-max-char\u0022: 220,\n//     \u0022image\u0022: \u0022openapi-json-null-sentinel-value-2BF93600-0FE4-4250-987A-E5DDB203E464\u0022,\n//     \u0022image_jpg\u0022: \u0022openapi-json-null-sentinel-value-2BF93600-0FE4-4250-987A-E5DDB203E464\u0022,\n//     \u0022model\u0022: \u0022Model 2\u0022,\n//     \u0022model_version\u0022: \u00222\u0022\n//   }\n// ]",
+      "Format": "sdk",
+      "OperationId": "getSkyboxStyleFamilies",
+      "Setup": "This example assumes \u0060using BlockadeLabs;\u0060 is in scope and \u0060apiKey\u0060 contains the required credential."
+    },
+    {
+      "Order": 13,
+      "Title": "Get Skybox Styles",
+      "Slug": "getskyboxstyles",
+      "Description": "Returns the list of predefined styles that can influence the overall aesthetic of your skybox generation.",
+      "Language": "csharp",
+      "Code": "using var client = new BlockadeLabsClient(apiKey);\n\nvar response = await client.Skyboxes.GetSkyboxStylesAsync(\n    modelVersion: \u0022\u0022\n);\n\n// Example response:\n// [\n//   {\n//     \u0022id\u0022: 2,\n//     \u0022name\u0022: \u0022Fantasy\u0022,\n//     \u0022description\u0022: \u0022Classic fantasy subject matter concept art renderings\u0022,\n//     \u0022max-char\u0022: 370,\n//     \u0022negative-text-max-char\u0022: 220,\n//     \u0022image\u0022: \u0022https://images.blockadelabs.com/images/skybox/4R0ACI1zHpLoOT8gGGu0dEe4QEzoMelaWGavSqPk.webp\u0022,\n//     \u0022image_jpg\u0022: \u0022https://images.blockadelabs.com/images/skybox/4R0ACI1zHpLoOT8gGGu0dEe4QEzoMelaWGavSqPk.jpg\u0022,\n//     \u0022model\u0022: \u0022Model 2\u0022,\n//     \u0022model_version\u0022: \u00222\u0022,\n//     \u0022sort_order\u0022: 20,\n//     \u0022premium\u0022: 0,\n//     \u0022new\u0022: 0,\n//     \u0022experimental\u0022: 0,\n//     \u0022skybox_style_families_id\u0022: 3\n//   },\n//   {\n//     \u0022id\u0022: 43,\n//     \u0022name\u0022: \u0022Art Mix\u0022,\n//     \u0022description\u0022: \u0022Multimedia painterly art that pulls from watercolor, marker, paint, pastels, and more\u0022,\n//     \u0022max-char\u0022: 412,\n//     \u0022negative-text-max-char\u0022: 210,\n//     \u0022image\u0022: \u0022https://images.blockadelabs.com/images/skybox/MYklQhpxG7wbn7HkftNTNxLZMc5mBjYvUuRajHpp.webp\u0022,\n//     \u0022image_jpg\u0022: \u0022https://images.blockadelabs.com/images/skybox/MYklQhpxG7wbn7HkftNTNxLZMc5mBjYvUuRajHpp.jpg\u0022,\n//     \u0022model\u0022: \u0022Model 2\u0022,\n//     \u0022model_version\u0022: \u00222\u0022,\n//     \u0022sort_order\u0022: 6,\n//     \u0022premium\u0022: 0,\n//     \u0022new\u0022: 0,\n//     \u0022experimental\u0022: 0,\n//     \u0022skybox_style_families_id\u0022: 7\n//   }\n// ]",
+      "Format": "sdk",
+      "OperationId": "getSkyboxStyles",
+      "Setup": "This example assumes \u0060using BlockadeLabs;\u0060 is in scope and \u0060apiKey\u0060 contains the required credential."
+    }
+  ]
+}
