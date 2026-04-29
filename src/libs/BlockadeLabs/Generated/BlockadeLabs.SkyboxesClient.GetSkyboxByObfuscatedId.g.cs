@@ -124,7 +124,7 @@ namespace BlockadeLabs
                 PrepareGetSkyboxByObfuscatedIdRequest(
                     httpClient: HttpClient,
                     httpRequestMessage: __httpRequest,
-                    obfuscatedId: obfuscatedId);
+                    obfuscatedId: obfuscatedId!);
 
                 return __httpRequest;
             }
