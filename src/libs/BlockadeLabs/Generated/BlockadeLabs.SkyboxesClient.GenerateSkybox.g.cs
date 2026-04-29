@@ -119,47 +119,75 @@ namespace BlockadeLabs
             }
                             var __httpRequestContent = new global::System.Net.Http.MultipartFormDataContent();
                             __httpRequestContent.Add(
-                                content: new global::System.Net.Http.StringContent($"{request.Prompt}"),
+                                content: new global::System.Net.Http.StringContent(request.Prompt ?? string.Empty),
                                 name: "\"prompt\"");
                             if (request.NegativeText != default)
                             {
 
                                 __httpRequestContent.Add(
-                                    content: new global::System.Net.Http.StringContent($"{request.NegativeText}"),
+                                    content: new global::System.Net.Http.StringContent(request.NegativeText ?? string.Empty),
                                     name: "\"negative_text\"");
                             } 
                             if (request.EnhancePrompt != default)
                             {
 
                                 __httpRequestContent.Add(
-                                    content: new global::System.Net.Http.StringContent($"{request.EnhancePrompt}"),
+                                    content: new global::System.Net.Http.StringContent((global::System.Convert.ToString(request.EnhancePrompt, global::System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty).ToLowerInvariant()),
                                     name: "\"enhance_prompt\"");
                             } 
                             if (request.Seed != default)
                             {
 
                                 __httpRequestContent.Add(
-                                    content: new global::System.Net.Http.StringContent($"{request.Seed}"),
+                                    content: new global::System.Net.Http.StringContent(global::System.Convert.ToString(request.Seed, global::System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty),
                                     name: "\"seed\"");
                             } 
                             if (request.SkyboxStyleId != default)
                             {
 
                                 __httpRequestContent.Add(
-                                    content: new global::System.Net.Http.StringContent($"{request.SkyboxStyleId}"),
+                                    content: new global::System.Net.Http.StringContent(global::System.Convert.ToString(request.SkyboxStyleId, global::System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty),
                                     name: "\"skybox_style_id\"");
                             } 
                             if (request.RemixImagineId != default)
                             {
 
                                 __httpRequestContent.Add(
-                                    content: new global::System.Net.Http.StringContent($"{request.RemixImagineId}"),
+                                    content: new global::System.Net.Http.StringContent(global::System.Convert.ToString(request.RemixImagineId, global::System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty),
                                     name: "\"remix_imagine_id\"");
                             } 
                             if (request.ControlImage != default)
                             {
 
                                 var __contentControlImage = new global::System.Net.Http.ByteArrayContent(request.ControlImage ?? global::System.Array.Empty<byte>());
+                                __contentControlImage.Headers.ContentType = new global::System.Net.Http.Headers.MediaTypeHeaderValue(
+                                    request.ControlImagename is null
+                                        ? "application/octet-stream"
+                                        : (global::System.IO.Path.GetExtension(request.ControlImagename) ?? string.Empty).ToLowerInvariant() switch
+                                        {
+                                            ".aac" => "audio/aac",
+                                            ".flac" => "audio/flac",
+                                            ".gif" => "image/gif",
+                                            ".jpeg" => "image/jpeg",
+                                            ".jpg" => "image/jpeg",
+                                            ".json" => "application/json",
+                                            ".m4a" => "audio/mp4",
+                                            ".mp3" => "audio/mpeg",
+                                            ".mp4" => "video/mp4",
+                                            ".mpeg" => "audio/mpeg",
+                                            ".mpga" => "audio/mpeg",
+                                            ".oga" => "audio/ogg",
+                                            ".ogg" => "audio/ogg",
+                                            ".opus" => "audio/ogg",
+                                            ".pdf" => "application/pdf",
+                                            ".png" => "image/png",
+                                            ".txt" => "text/plain",
+                                            ".wav" => "audio/wav",
+                                            ".weba" => "audio/webm",
+                                            ".webm" => "video/webm",
+                                            ".webp" => "image/webp",
+                                            _ => "application/octet-stream",
+                                        });
                                 __httpRequestContent.Add(
                                     content: __contentControlImage,
                                     name: "\"control_image\"",
@@ -173,13 +201,41 @@ namespace BlockadeLabs
                             {
 
                                 __httpRequestContent.Add(
-                                    content: new global::System.Net.Http.StringContent($"{request.ControlModel}"),
+                                    content: new global::System.Net.Http.StringContent(request.ControlModel ?? string.Empty),
                                     name: "\"control_model\"");
                             } 
                             if (request.InitImage != default)
                             {
 
                                 var __contentInitImage = new global::System.Net.Http.ByteArrayContent(request.InitImage ?? global::System.Array.Empty<byte>());
+                                __contentInitImage.Headers.ContentType = new global::System.Net.Http.Headers.MediaTypeHeaderValue(
+                                    request.InitImagename is null
+                                        ? "application/octet-stream"
+                                        : (global::System.IO.Path.GetExtension(request.InitImagename) ?? string.Empty).ToLowerInvariant() switch
+                                        {
+                                            ".aac" => "audio/aac",
+                                            ".flac" => "audio/flac",
+                                            ".gif" => "image/gif",
+                                            ".jpeg" => "image/jpeg",
+                                            ".jpg" => "image/jpeg",
+                                            ".json" => "application/json",
+                                            ".m4a" => "audio/mp4",
+                                            ".mp3" => "audio/mpeg",
+                                            ".mp4" => "video/mp4",
+                                            ".mpeg" => "audio/mpeg",
+                                            ".mpga" => "audio/mpeg",
+                                            ".oga" => "audio/ogg",
+                                            ".ogg" => "audio/ogg",
+                                            ".opus" => "audio/ogg",
+                                            ".pdf" => "application/pdf",
+                                            ".png" => "image/png",
+                                            ".txt" => "text/plain",
+                                            ".wav" => "audio/wav",
+                                            ".weba" => "audio/webm",
+                                            ".webm" => "video/webm",
+                                            ".webp" => "image/webp",
+                                            _ => "application/octet-stream",
+                                        });
                                 __httpRequestContent.Add(
                                     content: __contentInitImage,
                                     name: "\"init_image\"",
@@ -193,21 +249,21 @@ namespace BlockadeLabs
                             {
 
                                 __httpRequestContent.Add(
-                                    content: new global::System.Net.Http.StringContent($"{request.InitStrength}"),
+                                    content: new global::System.Net.Http.StringContent(global::System.Convert.ToString(request.InitStrength, global::System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty),
                                     name: "\"init_strength\"");
                             } 
                             if (request.ReturnDepthHq != default)
                             {
 
                                 __httpRequestContent.Add(
-                                    content: new global::System.Net.Http.StringContent($"{request.ReturnDepthHq}"),
+                                    content: new global::System.Net.Http.StringContent((global::System.Convert.ToString(request.ReturnDepthHq, global::System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty).ToLowerInvariant()),
                                     name: "\"return_depth_hq\"");
                             } 
                             if (request.WebhookUrl != default)
                             {
 
                                 __httpRequestContent.Add(
-                                    content: new global::System.Net.Http.StringContent($"{request.WebhookUrl}"),
+                                    content: new global::System.Net.Http.StringContent(request.WebhookUrl ?? string.Empty),
                                     name: "\"webhook_url\"");
                             }
                             __httpRequest.Content = __httpRequestContent;
