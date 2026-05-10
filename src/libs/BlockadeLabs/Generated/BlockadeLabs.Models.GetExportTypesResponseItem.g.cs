@@ -78,5 +78,6 @@ namespace BlockadeLabs
         public GetExportTypesResponseItem()
         {
         }
+
     }
 }

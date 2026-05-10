@@ -367,5 +367,6 @@ namespace BlockadeLabs
         public GenerateSkyboxResponse()
         {
         }
+
     }
 }

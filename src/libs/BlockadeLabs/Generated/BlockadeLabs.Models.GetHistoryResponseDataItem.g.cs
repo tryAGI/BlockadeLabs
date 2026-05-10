@@ -424,5 +424,6 @@ namespace BlockadeLabs
         public GetHistoryResponseDataItem()
         {
         }
+
     }
 }
