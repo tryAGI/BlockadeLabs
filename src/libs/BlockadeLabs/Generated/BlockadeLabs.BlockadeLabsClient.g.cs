@@ -42,7 +42,7 @@ namespace BlockadeLabs
         /// <summary>
         /// 
         /// </summary>
-        public SkyboxExportsClient SkyboxExports => new SkyboxExportsClient(HttpClient, authorizations: Authorizations, options: Options)
+        public SkyboxExportsClient SkyboxExports => new SkyboxExportsClient(HttpClient, baseUri: null, authorizations: Authorizations, options: Options)
         {
             ReadResponseAsString = ReadResponseAsString,
             JsonSerializerContext = JsonSerializerContext,
@@ -51,7 +51,7 @@ namespace BlockadeLabs
         /// <summary>
         /// 
         /// </summary>
-        public SkyboxesClient Skyboxes => new SkyboxesClient(HttpClient, authorizations: Authorizations, options: Options)
+        public SkyboxesClient Skyboxes => new SkyboxesClient(HttpClient, baseUri: null, authorizations: Authorizations, options: Options)
         {
             ReadResponseAsString = ReadResponseAsString,
             JsonSerializerContext = JsonSerializerContext,
@@ -80,6 +80,27 @@ namespace BlockadeLabs
         }
 
         /// <summary>
+        /// Creates a new instance of the BlockadeLabsClient with explicit options but no base URL override.
+        /// Skips passing <c>baseUri</c> so the default base URL from the OpenAPI spec applies.
+        /// </summary>
+        /// <param name="httpClient">The HttpClient instance. If not provided, a new one will be created.</param>
+        /// <param name="authorizations">The authorizations to use for the requests.</param>
+        /// <param name="options">Client-wide request defaults such as headers, query parameters, retries, and timeout.</param>
+        /// <param name="disposeHttpClient">Dispose the HttpClient when the instance is disposed. True by default.</param>
+        public BlockadeLabsClient(
+            global::System.Net.Http.HttpClient? httpClient,
+            global::System.Collections.Generic.List<global::BlockadeLabs.EndPointAuthorization>? authorizations,
+            global::BlockadeLabs.AutoSDKClientOptions? options,
+            bool disposeHttpClient = true) : this(
+                httpClient,
+                baseUri: null,
+                authorizations,
+                options,
+                disposeHttpClient: disposeHttpClient)
+        {
+        }
+
+        /// <summary>
         /// Creates a new instance of the BlockadeLabsClient.
         /// If no httpClient is provided, a new one will be created.
         /// If no baseUri is provided, the default baseUri from OpenAPI spec will be used.
@@ -90,10 +111,10 @@ namespace BlockadeLabs
         /// <param name="options">Client-wide request defaults such as headers, query parameters, retries, and timeout.</param>
         /// <param name="disposeHttpClient">Dispose the HttpClient when the instance is disposed. True by default.</param>
         public BlockadeLabsClient(
-            global::System.Net.Http.HttpClient? httpClient = null,
-            global::System.Uri? baseUri = null,
-            global::System.Collections.Generic.List<global::BlockadeLabs.EndPointAuthorization>? authorizations = null,
-            global::BlockadeLabs.AutoSDKClientOptions? options = null,
+            global::System.Net.Http.HttpClient? httpClient,
+            global::System.Uri? baseUri,
+            global::System.Collections.Generic.List<global::BlockadeLabs.EndPointAuthorization>? authorizations,
+            global::BlockadeLabs.AutoSDKClientOptions? options,
             bool disposeHttpClient = true)
         {
 

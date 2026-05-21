@@ -188,5 +188,6 @@ namespace BlockadeLabs
         public GenerateSkyboxRequest()
         {
         }
+
     }
 }

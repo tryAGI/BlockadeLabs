@@ -226,5 +226,6 @@ namespace BlockadeLabs
         public GetSkyboxStylesResponseItem()
         {
         }
+
     }
 }

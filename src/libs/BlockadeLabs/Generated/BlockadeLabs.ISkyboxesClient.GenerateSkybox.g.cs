@@ -21,6 +21,19 @@ namespace BlockadeLabs
         /// Generate Skybox<br/>
         /// Used for generating skyboxes, skybox remixes and depth maps.
         /// </summary>
+        /// <param name="request"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
+        /// <param name="cancellationToken">The token to cancel the operation with</param>
+        /// <exception cref="global::BlockadeLabs.ApiException"></exception>
+        global::System.Threading.Tasks.Task<global::BlockadeLabs.AutoSDKHttpResponse<global::BlockadeLabs.GenerateSkyboxResponse>> GenerateSkyboxAsResponseAsync(
+
+            global::BlockadeLabs.GenerateSkyboxRequest request,
+            global::BlockadeLabs.AutoSDKRequestOptions? requestOptions = default,
+            global::System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Generate Skybox<br/>
+        /// Used for generating skyboxes, skybox remixes and depth maps.
+        /// </summary>
         /// <param name="prompt">
         /// Text prompt describing the skybox world you wish to create. Maximum number of characters: 550. If you are using skybox_style_id then the maximum number of characters is defined in the max-char response parameter defined for each style.<br/>
         /// Example: dark forest

@@ -42,5 +42,6 @@ namespace BlockadeLabs
         public CancelAllPendingGenerationsResponse()
         {
         }
+
     }
 }
