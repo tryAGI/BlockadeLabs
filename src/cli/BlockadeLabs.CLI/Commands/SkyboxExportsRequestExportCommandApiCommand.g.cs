@@ -99,7 +99,7 @@ If the export request has already been completed you will immediately get a resp
                             cancellationToken).ConfigureAwait(false);
                         var skyboxId = parseResult.GetRequiredValue(SkyboxId);
                         var typeId = parseResult.GetRequiredValue(TypeId);
-                        var webhookUrl = CliRuntime.WasSpecified(parseResult, WebhookUrl) ? parseResult.GetValue(WebhookUrl) : __requestBase is not null ? __requestBase.WebhookUrl : default;
+                        var webhookUrl = CliRuntime.WasSpecified(parseResult, WebhookUrl) ? parseResult.GetValue(WebhookUrl) : (__requestBase is { } __WebhookUrlBaseValue ? __WebhookUrlBaseValue.WebhookUrl : default);
                 using var client = await CliRuntime.CreateClientAsync(parseResult, cancellationToken).ConfigureAwait(false);
 
 
