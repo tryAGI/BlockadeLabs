@@ -11,3 +11,20 @@ autosdk generate openapi.yaml \
   --security-scheme ApiKey:Header:x-api-key \
   --output Generated \
   --exclude-deprecated-operations
+
+rm -rf ../../cli/BlockadeLabs.CLI
+
+autosdk cli-project openapi.yaml \
+  --output ../../cli/BlockadeLabs.CLI \
+  --sdk-project ../../libs/BlockadeLabs/BlockadeLabs.csproj \
+  --targetFramework net10.0 \
+  --namespace BlockadeLabs \
+  --clientClassName BlockadeLabsClient \
+  --package-id BlockadeLabs.CLI \
+  --tool-command-name blockade-labs \
+  --user-secrets-id BlockadeLabs.CLI \
+  --api-key-env-var BLOCKADELABS_API_KEY \
+  --base-url-env-var BLOCKADELABS_BASE_URL \
+  --cli-credential-file \
+  --exclude-deprecated-operations \
+  --security-scheme ApiKey:Header:x-api-key

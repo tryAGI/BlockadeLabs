@@ -40,6 +40,13 @@ using BlockadeLabs;
 using var client = new BlockadeLabsClient(apiKey);
 ```
 
+### CLI
+
+```bash
+dotnet tool install --global BlockadeLabs.CLI --prerelease
+blockade-labs api --help
+```
+
 <!-- EXAMPLES:START -->
 <!-- EXAMPLES:END -->
 
