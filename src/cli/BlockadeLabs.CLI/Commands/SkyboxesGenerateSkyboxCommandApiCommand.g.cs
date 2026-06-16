@@ -168,19 +168,19 @@ Used for generating skyboxes, skybox remixes and depth maps.");
                             global::BlockadeLabs.SourceGenerationContext.Default,
                             cancellationToken).ConfigureAwait(false);
                         var prompt = parseResult.GetRequiredValue(Prompt);
-                        var negativeText = CliRuntime.WasSpecified(parseResult, NegativeText) ? parseResult.GetValue(NegativeText) : __requestBase is not null ? __requestBase.NegativeText : default;
-                        var enhancePrompt = CliRuntime.WasSpecified(parseResult, EnhancePrompt) ? parseResult.GetValue(EnhancePrompt) : __requestBase is not null ? __requestBase.EnhancePrompt : default;
-                        var seed = CliRuntime.WasSpecified(parseResult, Seed) ? parseResult.GetValue(Seed) : __requestBase is not null ? __requestBase.Seed : default;
-                        var skyboxStyleId = CliRuntime.WasSpecified(parseResult, SkyboxStyleId) ? parseResult.GetValue(SkyboxStyleId) : __requestBase is not null ? __requestBase.SkyboxStyleId : default;
-                        var remixImagineId = CliRuntime.WasSpecified(parseResult, RemixImagineId) ? parseResult.GetValue(RemixImagineId) : __requestBase is not null ? __requestBase.RemixImagineId : default;
-                        var controlImage = CliRuntime.WasSpecified(parseResult, ControlImage) ? parseResult.GetValue(ControlImage) : __requestBase is not null ? __requestBase.ControlImage : default;
-                        var controlImagename = CliRuntime.WasSpecified(parseResult, ControlImagename) ? parseResult.GetValue(ControlImagename) : __requestBase is not null ? __requestBase.ControlImagename : default;
-                        var controlModel = CliRuntime.WasSpecified(parseResult, ControlModel) ? parseResult.GetValue(ControlModel) : __requestBase is not null ? __requestBase.ControlModel : default;
-                        var initImage = CliRuntime.WasSpecified(parseResult, InitImage) ? parseResult.GetValue(InitImage) : __requestBase is not null ? __requestBase.InitImage : default;
-                        var initImagename = CliRuntime.WasSpecified(parseResult, InitImagename) ? parseResult.GetValue(InitImagename) : __requestBase is not null ? __requestBase.InitImagename : default;
-                        var initStrength = CliRuntime.WasSpecified(parseResult, InitStrength) ? parseResult.GetValue(InitStrength) : __requestBase is not null ? __requestBase.InitStrength : default;
-                        var returnDepthHq = CliRuntime.WasSpecified(parseResult, ReturnDepthHq) ? parseResult.GetValue(ReturnDepthHq) : __requestBase is not null ? __requestBase.ReturnDepthHq : default;
-                        var webhookUrl = CliRuntime.WasSpecified(parseResult, WebhookUrl) ? parseResult.GetValue(WebhookUrl) : __requestBase is not null ? __requestBase.WebhookUrl : default;
+                        var negativeText = CliRuntime.WasSpecified(parseResult, NegativeText) ? parseResult.GetValue(NegativeText) : (__requestBase is { } __NegativeTextBaseValue ? __NegativeTextBaseValue.NegativeText : default);
+                        var enhancePrompt = CliRuntime.WasSpecified(parseResult, EnhancePrompt) ? parseResult.GetValue(EnhancePrompt) : (__requestBase is { } __EnhancePromptBaseValue ? __EnhancePromptBaseValue.EnhancePrompt : default);
+                        var seed = CliRuntime.WasSpecified(parseResult, Seed) ? parseResult.GetValue(Seed) : (__requestBase is { } __SeedBaseValue ? __SeedBaseValue.Seed : default);
+                        var skyboxStyleId = CliRuntime.WasSpecified(parseResult, SkyboxStyleId) ? parseResult.GetValue(SkyboxStyleId) : (__requestBase is { } __SkyboxStyleIdBaseValue ? __SkyboxStyleIdBaseValue.SkyboxStyleId : default);
+                        var remixImagineId = CliRuntime.WasSpecified(parseResult, RemixImagineId) ? parseResult.GetValue(RemixImagineId) : (__requestBase is { } __RemixImagineIdBaseValue ? __RemixImagineIdBaseValue.RemixImagineId : default);
+                        var controlImage = CliRuntime.WasSpecified(parseResult, ControlImage) ? parseResult.GetValue(ControlImage) : (__requestBase is { } __ControlImageBaseValue ? __ControlImageBaseValue.ControlImage : default);
+                        var controlImagename = CliRuntime.WasSpecified(parseResult, ControlImagename) ? parseResult.GetValue(ControlImagename) : (__requestBase is { } __ControlImagenameBaseValue ? __ControlImagenameBaseValue.ControlImagename : default);
+                        var controlModel = CliRuntime.WasSpecified(parseResult, ControlModel) ? parseResult.GetValue(ControlModel) : (__requestBase is { } __ControlModelBaseValue ? __ControlModelBaseValue.ControlModel : default);
+                        var initImage = CliRuntime.WasSpecified(parseResult, InitImage) ? parseResult.GetValue(InitImage) : (__requestBase is { } __InitImageBaseValue ? __InitImageBaseValue.InitImage : default);
+                        var initImagename = CliRuntime.WasSpecified(parseResult, InitImagename) ? parseResult.GetValue(InitImagename) : (__requestBase is { } __InitImagenameBaseValue ? __InitImagenameBaseValue.InitImagename : default);
+                        var initStrength = CliRuntime.WasSpecified(parseResult, InitStrength) ? parseResult.GetValue(InitStrength) : (__requestBase is { } __InitStrengthBaseValue ? __InitStrengthBaseValue.InitStrength : default);
+                        var returnDepthHq = CliRuntime.WasSpecified(parseResult, ReturnDepthHq) ? parseResult.GetValue(ReturnDepthHq) : (__requestBase is { } __ReturnDepthHqBaseValue ? __ReturnDepthHqBaseValue.ReturnDepthHq : default);
+                        var webhookUrl = CliRuntime.WasSpecified(parseResult, WebhookUrl) ? parseResult.GetValue(WebhookUrl) : (__requestBase is { } __WebhookUrlBaseValue ? __WebhookUrlBaseValue.WebhookUrl : default);
                 using var client = await CliRuntime.CreateClientAsync(parseResult, cancellationToken).ConfigureAwait(false);
 
 
