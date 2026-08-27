@@ -132,7 +132,7 @@ namespace BlockadeLabs
                          __authorization.Location == "Header")
                 {
                     __httpRequest.Headers.Add(__authorization.Name, __authorization.Value);
-                } 
+                }
             }
                 global::BlockadeLabs.AutoSDKRequestOptionsSupport.ApplyHeaders(
                     request: __httpRequest,

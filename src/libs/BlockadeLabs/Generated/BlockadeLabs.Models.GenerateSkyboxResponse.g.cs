@@ -98,7 +98,7 @@ namespace BlockadeLabs
         public string? ThumbUrl { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("depth_map_url")]
         public string? DepthMapUrl { get; set; }

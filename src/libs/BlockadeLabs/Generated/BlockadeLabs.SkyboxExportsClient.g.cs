@@ -10,7 +10,7 @@ namespace BlockadeLabs
     public sealed partial class SkyboxExportsClient : global::BlockadeLabs.ISkyboxExportsClient, global::System.IDisposable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public const string DefaultBaseUrl = "https://backend.blockadelabs.com/";
 
@@ -37,7 +37,7 @@ namespace BlockadeLabs
         internal global::System.Lazy<global::System.Text.Json.Serialization.JsonSerializerContext> JsonSerializerContextProvider { get; set; } = new(() => global::BlockadeLabs.SourceGenerationContext.Default);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public global::System.Text.Json.Serialization.JsonSerializerContext JsonSerializerContext
         {
