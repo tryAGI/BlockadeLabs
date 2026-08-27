@@ -10,7 +10,7 @@ namespace BlockadeLabs
     public sealed partial class BlockadeLabsClient : global::BlockadeLabs.IBlockadeLabsClient, global::System.IDisposable
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public const string DefaultBaseUrl = "https://backend.blockadelabs.com/";
 
@@ -37,7 +37,7 @@ namespace BlockadeLabs
         internal global::System.Lazy<global::System.Text.Json.Serialization.JsonSerializerContext> JsonSerializerContextProvider { get; set; } = new(() => global::BlockadeLabs.SourceGenerationContext.Default);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public global::System.Text.Json.Serialization.JsonSerializerContext JsonSerializerContext
         {
@@ -47,7 +47,7 @@ namespace BlockadeLabs
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public SkyboxExportsClient SkyboxExports => new SkyboxExportsClient(HttpClient, baseUri: null, authorizations: Authorizations, options: Options)
         {
@@ -56,7 +56,7 @@ namespace BlockadeLabs
         };
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public SkyboxesClient Skyboxes => new SkyboxesClient(HttpClient, baseUri: null, authorizations: Authorizations, options: Options)
         {

@@ -39,18 +39,18 @@ namespace BlockadeLabs
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         global::System.Text.Json.Serialization.JsonSerializerContext JsonSerializerContext { get; set; }
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public SkyboxExportsClient SkyboxExports { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public SkyboxesClient Skyboxes { get; }
 

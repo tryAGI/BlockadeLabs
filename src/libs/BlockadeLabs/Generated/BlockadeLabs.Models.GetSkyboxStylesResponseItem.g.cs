@@ -4,7 +4,7 @@
 namespace BlockadeLabs
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class GetSkyboxStylesResponseItem
     {

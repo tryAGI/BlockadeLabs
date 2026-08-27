@@ -9,7 +9,7 @@ namespace BlockadeLabs
     public sealed partial class GetSkyboxByIdResponse
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("request")]
         public global::BlockadeLabs.GetSkyboxByIdResponseRequest? Request { get; set; }
