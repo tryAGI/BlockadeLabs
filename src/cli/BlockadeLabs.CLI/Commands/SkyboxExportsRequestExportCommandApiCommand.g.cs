@@ -42,6 +42,22 @@ internal static partial class SkyboxExportsRequestExportCommandApiCommand
           Description = "Path to a JSON request file, or '-' for stdin.",
           Hidden = true,
       };
+      private static Option<bool> Wait { get; } = new("--wait")
+      {
+          Description = "Poll the generated wait helper until the resource reaches a terminal state.",
+      };
+
+      private static Option<string> PollInterval { get; } = new("--poll-interval")
+      {
+          Description = "Polling interval, for example 250ms, 2s, 30m, or 01:00:00.",
+          DefaultValueFactory = _ => "2s",
+      };
+
+      private static Option<string> WaitTimeout { get; } = new("--wait-timeout")
+      {
+          Description = "Maximum time to wait before timing out, for example 30m or 00:30:00.",
+          DefaultValueFactory = _ => "30m",
+      };
 
                     private static string FormatResponse(ParseResult parseResult, global::BlockadeLabs.RequestExportResponse value, global::System.Text.Json.Serialization.JsonSerializerContext context, bool truncateLongStrings)
                     {
@@ -86,7 +102,9 @@ If the export request has already been completed you will immediately get a resp
                   result.AddError(@"Specify at most one of --input, --request-json, or --request-file.");
               }
           });
-
+          command.Options.Add(Wait);
+          command.Options.Add(PollInterval);
+          command.Options.Add(WaitTimeout);
         command.SetAction(async (ParseResult parseResult, CancellationToken cancellationToken) =>
             await CliRuntime.RunAsync(async () =>
             {
@@ -99,9 +117,41 @@ If the export request has already been completed you will immediately get a resp
                             cancellationToken).ConfigureAwait(false);
                         var skyboxId = parseResult.GetRequiredValue(SkyboxId);
                         var typeId = parseResult.GetRequiredValue(TypeId);
-                        var webhookUrl = CliRuntime.WasSpecified(parseResult, WebhookUrl) ? parseResult.GetValue(WebhookUrl) : (__requestBase is { } __WebhookUrlBaseValue ? __WebhookUrlBaseValue.WebhookUrl : default);
+                        var webhookUrl = CliRuntime.WasSpecified(parseResult, WebhookUrl) ? parseResult.GetValue(WebhookUrl) : (__requestBase is { } __WebhookUrlBaseValue ? __WebhookUrlBaseValue.WebhookUrl : default);          var wait = parseResult.GetValue(Wait);
+          var pollInterval = wait ? CliRuntime.ParseDuration(parseResult.GetRequiredValue(PollInterval), PollInterval.Name) : default;
+          var waitTimeout = wait ? CliRuntime.ParseDuration(parseResult.GetRequiredValue(WaitTimeout), WaitTimeout.Name) : default;
                 using var client = await CliRuntime.CreateClientAsync(parseResult, cancellationToken).ConfigureAwait(false);
 
+                                if (wait)
+                                {
+                                var createResponse = await client.SkyboxExports.RequestExportAsync(
+                                    skyboxId: skyboxId,
+                                    typeId: typeId,
+                                    webhookUrl: webhookUrl,
+                                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                                    var resourceId = global::System.Convert.ToString(
+                                        createResponse.Id,
+                                        global::System.Globalization.CultureInfo.InvariantCulture);
+                                    if (string.IsNullOrWhiteSpace(resourceId))
+                                    {
+                                        throw new CliException("The create response did not contain a job id.");
+                                    }
+
+                                    var waitResponse = await CliRuntime.PollUntilTerminalAsync(
+                                        fetchAsync: token => client.SkyboxExports.GetExportRequestAsync(
+                                            id: resourceId,
+                                            cancellationToken: token),
+                                        pollInterval: pollInterval,
+                                        waitTimeout: waitTimeout,
+                                        context: global::BlockadeLabs.SourceGenerationContext.Default,
+                                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                                    await CliRuntime.WriteResponseAsync(
+                                        parseResult,
+                                        waitResponse,
+                                        global::BlockadeLabs.SourceGenerationContext.Default,
+                                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                                    return;
+                                }
 
                                 var response = await client.SkyboxExports.RequestExportAsync(
                                     skyboxId: skyboxId,
