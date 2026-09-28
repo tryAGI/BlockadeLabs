@@ -4,8 +4,10 @@ using System.CommandLine;
 
 namespace BlockadeLabs.CLI.Commands;
 
-internal static class SkyboxesApiGroupCommand
+internal static partial class SkyboxesApiGroupCommand
 {
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"skyboxes", @"Skyboxes endpoint commands.");
@@ -18,6 +20,7 @@ internal static class SkyboxesApiGroupCommand
                          command.Subcommands.Add(SkyboxesGetSkyboxByObfuscatedIdCommandApiCommand.Create());
                          command.Subcommands.Add(SkyboxesGetSkyboxStyleFamiliesCommandApiCommand.Create());
                          command.Subcommands.Add(SkyboxesGetSkyboxStylesCommandApiCommand.Create());
+        CustomizeCommand(ref command);
         return command;
     }
 }

@@ -79,6 +79,8 @@ internal static partial class SkyboxExportsRequestExportCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"request-export", @"Request Export
@@ -167,6 +169,7 @@ If the export request has already been completed you will immediately get a resp
                                     FormatResponse,
                                     cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }
