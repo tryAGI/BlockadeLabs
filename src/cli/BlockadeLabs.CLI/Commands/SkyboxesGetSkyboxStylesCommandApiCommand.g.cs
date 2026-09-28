@@ -33,6 +33,8 @@ internal static partial class SkyboxesGetSkyboxStylesCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"get-skybox-styles", @"Get Skybox Styles
@@ -67,6 +69,7 @@ Returns the list of predefined styles that can influence the overall aesthetic o
                                     cancellationToken).ConfigureAwait(false);
                                 }
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

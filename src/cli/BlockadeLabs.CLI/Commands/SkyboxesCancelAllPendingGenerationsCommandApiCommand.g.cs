@@ -29,6 +29,8 @@ internal static partial class SkyboxesCancelAllPendingGenerationsCommandApiComma
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"cancel-all-pending-generations", @"Cancel All Pending Generations
@@ -55,6 +57,7 @@ This request sets the status of all pending generations to abort.");
                                     FormatResponse,
                                     cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

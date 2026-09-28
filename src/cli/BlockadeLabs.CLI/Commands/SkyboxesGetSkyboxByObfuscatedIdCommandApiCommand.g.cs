@@ -33,6 +33,8 @@ internal static partial class SkyboxesGetSkyboxByObfuscatedIdCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"get-skybox-by-obfuscated-id", @"Get Skybox by Obfuscated id");
@@ -58,6 +60,7 @@ internal static partial class SkyboxesGetSkyboxByObfuscatedIdCommandApiCommand
                                     FormatResponse,
                                     cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }
