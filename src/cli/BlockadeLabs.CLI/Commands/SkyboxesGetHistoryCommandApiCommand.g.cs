@@ -71,9 +71,9 @@ internal static partial class SkyboxesGetHistoryCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-history", @"Get History");
+        var command = new Command(commandName ?? @"get-history", @"Get History");
                         command.Options.Add(Status);
                         command.Options.Add(Limit);
                         command.Options.Add(Offset);

@@ -31,9 +31,9 @@ internal static partial class SkyboxExportsGetExportTypesCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-export-types", @"Get Export Types
+        var command = new Command(commandName ?? @"get-export-types", @"Get Export Types
 Returns the list of all available export types.");
 
 

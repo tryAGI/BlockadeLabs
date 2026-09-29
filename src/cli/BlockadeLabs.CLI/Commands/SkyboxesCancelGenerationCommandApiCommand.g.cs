@@ -35,9 +35,9 @@ internal static partial class SkyboxesCancelGenerationCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"cancel-generation", @"Cancel Generation
+        var command = new Command(commandName ?? @"cancel-generation", @"Cancel Generation
 This request sets the status to the abort value.");
                         command.Arguments.Add(Id);
 

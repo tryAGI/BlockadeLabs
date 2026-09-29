@@ -35,9 +35,9 @@ internal static partial class SkyboxesDeleteCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"delete", @"Delete
+        var command = new Command(commandName ?? @"delete", @"Delete
 This request deletes skybox.");
                         command.Arguments.Add(Id);
 

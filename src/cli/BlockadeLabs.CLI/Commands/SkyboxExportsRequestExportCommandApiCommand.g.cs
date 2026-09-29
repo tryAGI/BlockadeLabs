@@ -81,9 +81,9 @@ internal static partial class SkyboxExportsRequestExportCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"request-export", @"Request Export
+        var command = new Command(commandName ?? @"request-export", @"Request Export
 Process for tracking export progress is identical to tracking skybox generation by using Pusher, Webhook or API Data pooling.
 
 If the export request has already been completed you will immediately get a response with status=complete and file_url in the response.");

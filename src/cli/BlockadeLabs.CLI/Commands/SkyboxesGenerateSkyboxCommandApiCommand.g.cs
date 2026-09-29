@@ -126,9 +126,9 @@ internal static partial class SkyboxesGenerateSkyboxCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"generate-skybox", @"Generate Skybox
+        var command = new Command(commandName ?? @"generate-skybox", @"Generate Skybox
 Used for generating skyboxes, skybox remixes and depth maps.");
                         command.Options.Add(Prompt);
                         command.Options.Add(NegativeText);

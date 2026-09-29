@@ -35,9 +35,9 @@ internal static partial class SkyboxesGetSkyboxByObfuscatedIdCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-skybox-by-obfuscated-id", @"Get Skybox by Obfuscated id");
+        var command = new Command(commandName ?? @"get-skybox-by-obfuscated-id", @"Get Skybox by Obfuscated id");
                         command.Arguments.Add(ObfuscatedId);
 
 

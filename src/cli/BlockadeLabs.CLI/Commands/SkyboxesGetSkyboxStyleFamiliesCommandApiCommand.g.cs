@@ -31,9 +31,9 @@ internal static partial class SkyboxesGetSkyboxStyleFamiliesCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-skybox-style-families", @"Get Skybox Style Families
+        var command = new Command(commandName ?? @"get-skybox-style-families", @"Get Skybox Style Families
 Returns the list of predefined styles that can influence the overall aesthetic of your skybox generation, sorted by style family. This route can be used in order to build a menu of styles sorted by family.");
 
 

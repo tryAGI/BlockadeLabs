@@ -31,9 +31,9 @@ internal static partial class SkyboxesCancelAllPendingGenerationsCommandApiComma
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"cancel-all-pending-generations", @"Cancel All Pending Generations
+        var command = new Command(commandName ?? @"cancel-all-pending-generations", @"Cancel All Pending Generations
 This request sets the status of all pending generations to abort.");
 
 

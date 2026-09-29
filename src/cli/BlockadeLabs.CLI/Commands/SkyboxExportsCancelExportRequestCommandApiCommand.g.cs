@@ -35,9 +35,9 @@ internal static partial class SkyboxExportsCancelExportRequestCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"cancel-export-request", @"Cancel export request");
+        var command = new Command(commandName ?? @"cancel-export-request", @"Cancel export request");
                         command.Arguments.Add(Id);
 
 
