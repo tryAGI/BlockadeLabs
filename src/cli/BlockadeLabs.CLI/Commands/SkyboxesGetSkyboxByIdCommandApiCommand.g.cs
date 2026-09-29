@@ -35,9 +35,9 @@ internal static partial class SkyboxesGetSkyboxByIdCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-skybox-by-id", @"Get Skybox by id");
+        var command = new Command(commandName ?? @"get-skybox-by-id", @"Get Skybox by id");
                         command.Arguments.Add(Id);
 
 

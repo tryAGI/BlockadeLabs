@@ -35,9 +35,9 @@ internal static partial class SkyboxesGetSkyboxStylesCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-skybox-styles", @"Get Skybox Styles
+        var command = new Command(commandName ?? @"get-skybox-styles", @"Get Skybox Styles
 Returns the list of predefined styles that can influence the overall aesthetic of your skybox generation.");
                         command.Options.Add(ModelVersion);
 
