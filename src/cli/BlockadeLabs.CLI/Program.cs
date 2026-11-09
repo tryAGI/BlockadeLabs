@@ -13,5 +13,6 @@ rootCommand.Options.Add(CliOptions.OutputDirectory);
 rootCommand.Subcommands.Add(AuthCommand.Create());
 rootCommand.Subcommands.Add(SkyboxExportsApiGroupCommand.Create());
 rootCommand.Subcommands.Add(SkyboxesApiGroupCommand.Create());
+rootCommand.Subcommands.Add(CliCompletion.CreateCommand(rootCommand, @"blockade-labs"));
 
 return await rootCommand.Parse(args).InvokeAsync().ConfigureAwait(false);
