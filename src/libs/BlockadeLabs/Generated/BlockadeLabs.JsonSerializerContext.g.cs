@@ -11,6 +11,14 @@ namespace BlockadeLabs
         DefaultIgnoreCondition = global::System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
         Converters = new global::System.Type[]
         {
+            typeof(global::BlockadeLabs.JsonConverters.GetSkyboxBatchesOrderJsonConverter),
+
+            typeof(global::BlockadeLabs.JsonConverters.GetSkyboxBatchesOrderNullableJsonConverter),
+
+            typeof(global::BlockadeLabs.JsonConverters.GetSkyboxBatchesStatusJsonConverter),
+
+            typeof(global::BlockadeLabs.JsonConverters.GetSkyboxBatchesStatusNullableJsonConverter),
+
             typeof(global::BlockadeLabs.JsonConverters.UnixTimestampJsonConverter),
         })]
     #pragma warning restore CS3016
@@ -18,13 +26,20 @@ namespace BlockadeLabs
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::System.Collections.Generic.List<object>), TypeInfoPropertyName = "SystemCollectionsGeneric_ObjectList")]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(string[]))]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::BlockadeLabs.GenerateSkyboxRequest))]
+    [global::System.Text.Json.Serialization.JsonSerializable(typeof(int))]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(string))]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(bool))]
-    [global::System.Text.Json.Serialization.JsonSerializable(typeof(int))]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(byte[]))]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(double))]
+    [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::BlockadeLabs.SubmitSkyboxBatchRequest))]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::BlockadeLabs.RequestExportRequest))]
+    [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::BlockadeLabs.GetSkyboxBatchesOrder), TypeInfoPropertyName = "GetSkyboxBatchesOrder2")]
+    [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::BlockadeLabs.GetSkyboxBatchesStatus), TypeInfoPropertyName = "GetSkyboxBatchesStatus2")]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::BlockadeLabs.GenerateSkyboxResponse))]
+    [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::BlockadeLabs.SubmitSkyboxBatchResponse))]
+    [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::System.Collections.Generic.IList<object>))]
+    [global::System.Text.Json.Serialization.JsonSerializable(typeof(object))]
+    [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::BlockadeLabs.GetSkyboxBatchesResponse))]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::System.Collections.Generic.IList<global::BlockadeLabs.GetSkyboxStylesResponseItem>))]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::BlockadeLabs.GetSkyboxStylesResponseItem))]
     [global::System.Text.Json.Serialization.JsonSerializable(typeof(global::System.Collections.Generic.IList<global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItem>))]

@@ -16,10 +16,12 @@ internal static partial class SkyboxesApiGroupCommand
                          command.Subcommands.Add(SkyboxesDeleteCommandApiCommand.Create());
                          command.Subcommands.Add(SkyboxesGenerateSkyboxCommandApiCommand.Create());
                          command.Subcommands.Add(SkyboxesGetHistoryCommandApiCommand.Create());
+                         command.Subcommands.Add(SkyboxesGetSkyboxBatchesCommandApiCommand.Create());
                          command.Subcommands.Add(SkyboxesGetSkyboxByIdCommandApiCommand.Create());
                          command.Subcommands.Add(SkyboxesGetSkyboxByObfuscatedIdCommandApiCommand.Create());
                          command.Subcommands.Add(SkyboxesGetSkyboxStyleFamiliesCommandApiCommand.Create());
                          command.Subcommands.Add(SkyboxesGetSkyboxStylesCommandApiCommand.Create());
+                         command.Subcommands.Add(SkyboxesSubmitSkyboxBatchCommandApiCommand.Create());
         CustomizeCommand(ref command);
         return command;
     }

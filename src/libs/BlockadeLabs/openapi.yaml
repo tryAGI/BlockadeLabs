@@ -11,7 +11,7 @@ paths:
     post:
       summary: 'Generate Skybox'
       operationId: generateSkybox
-      description: 'Used for generating skyboxes, skybox remixes and depth maps.'
+      description: 'Generate a Model 3 or Model 4 skybox on the same endpoint. Send application/json, or multipart/form-data when uploading an image. Model 4 styles and variant_id require a Standard or Business plan (Essential and Free receive 403). Remix, control, and init parameters are documented for Model 3. Model 2 is discontinued.'
       parameters:
         -
           in: header
@@ -145,8 +145,16 @@ paths:
                     example: 2
                   skybox_style_name:
                     type: string
-                    example: 'V2 Fantasy Lands'
+                    example: 'Open World'
                     description: 'Skybox style name used in a generation request'
+                  variant_id:
+                    type: integer
+                    example: 1
+                    description: 'Quality variant used for a Model 4 generation. Omitted for Model 3.'
+                  model:
+                    type: string
+                    example: 'Model 4'
+                    description: 'Model used for the generation.'
                   skybox_name:
                     type: string
                     example: 'V2 Fantasy Lands'
@@ -159,56 +167,296 @@ paths:
             schema:
               type: object
               properties:
+                skybox_style_id:
+                  type: integer
+                  description: 'Style id from Get Skybox Styles. Chooses the model version and the aesthetic. Required.'
+                  example: 155
                 prompt:
                   type: string
-                  description: 'Text prompt describing the skybox world you wish to create. Maximum number of characters: 550. If you are using skybox_style_id then the maximum number of characters is defined in the max-char response parameter defined for each style.'
+                  description: 'Text prompt describing the skybox world you wish to create. Maximum number of characters: 2000, or the max-char value returned for the chosen style.'
                   example: 'dark forest'
                 negative_text:
                   type: string
-                  description: 'Describe things to avoid in the skybox world you wish to create. Maximum number of characters: 200. If you are using skybox_style_id then the maximum number of characters is defined in the negative-text-max-char response parameter defined for each style.'
+                  description: 'Things to avoid. Maximum number of characters: 600, or the negative-text-max-char value returned for the chosen style.'
                   example: ''
                 enhance_prompt:
                   type: boolean
-                  description: 'Have an AI automatically improve your prompt to generate pro-level results every time (default: false)'
-                  example: ''
+                  description: 'Have an AI automatically improve the prompt (default: false).'
+                  example: false
+                horizon_shift:
+                  type: integer
+                  minimum: -20
+                  maximum: 20
+                  description: 'Model 4 only. Not used for Model 3 generations. Defaults to 0. Negative shifts the horizon down, positive shifts it up. Accepted range: -20 to 20.'
+                  example: 0
+                variant_id:
+                  type: integer
+                  description: 'Model 4 quality variant from the variants array on Get Skybox Styles. 1 is Balance (3 credits, about 60s). 2 is Detail (6 credits, about 120s). If omitted, the style default is used. Required for Model 4 batches. Model 4 variants require a Standard or Business plan.'
+                  example: 1
+                soft_lines:
+                  type: boolean
+                  description: 'Model 4 only. Softer line rendering while preserving structural geometry. Default: false.'
+                  example: false
                 seed:
                   type: integer
-                  description: 'Send 0 for a random seed generation. Any other number (1-2147483647) set will be used to "freeze" the image generator and create similar images when run again with the same seed and settings.'
+                  description: 'Send 0 for a random seed. Any other number freezes the generator for a similar result with the same settings. Model 3 accepts 1-2147483647. Model 4 accepts 1-4294967295.'
+                  example: 0
+                webhook_url:
+                  type: string
+                  description: 'Optional URL for generation progress updates.'
                   example: ''
-                skybox_style_id:
+                max_wait:
                   type: integer
-                  description: 'Predefined styles that influence the overall aesthetic of your skybox generation (Fantasy landscape, Anime art style, etc...).'
-                  example: ''
+                  minimum: 30
+                  maximum: 1800
+                  description: 'Maximum seconds to wait for the generation. If it does not finish in time, status is set to error and credits are refunded. Accepted range: 30-1800. Model 3 and Model 4.'
+                  example: 120
                 remix_imagine_id:
                   type: integer
-                  description: 'ID of a previously generated skybox'
+                  description: 'Model 3. ID of a previously generated skybox to remix.'
+                  example: ''
+                remix_collection_id:
+                  type: integer
+                  description: 'Model 3. ID of a project created in the web app. A random skybox from that project is used as the remix starting point.'
                   example: ''
                 control_image:
                   type: string
                   format: binary
-                  description: 'Control image used to influence the generation. The image needs to be exacly 1024 pixels wide and 512 pixels tall PNG equirectangular projection image of a scribble with black (#00000) background and white (#ffffff) brush strokes. For "scribble" effect you will also need to send control_model="scribble".'
+                  description: 'Model 3. Control image (binary, Base64, or absolute URL) that influences structure. Use with control_model set to remix.'
+                control_image_hash:
+                  type: string
+                  description: 'Model 3. obfuscated_id of an existing skybox whose control image should be reused, instead of uploading control_image again.'
+                  example: ''
                 control_model:
                   type: string
-                  description: 'Model used for the control_image. Currently, the only option is: "scribble".'
-                  example: ''
+                  description: 'Model 3. Model used for control_image. The only option is "remix".'
+                  example: remix
                 init_image:
                   type: string
                   format: binary
-                  description: 'Image (Binary/Base64 string/Absolute URL) to be used as initial image for Skybox generation. Please use equirectangular 360° images. 2:1 aspect ratio recommended. Maximum file size is 50 megabytes.'
+                  description: 'Model 3. Init image (binary, Base64, or absolute URL). Equirectangular images. Guides color and composition.'
+                init_image_hash:
+                  type: string
+                  description: 'Model 3. obfuscated_id of an existing skybox whose init image should be reused, instead of uploading init_image again.'
+                  example: ''
                 init_strength:
                   type: number
-                  description: 'Scale to be used as initial influence of the "Init Image" for Skybox generation. The default value is 0, allowed range is between 0 and 0.97, where 0 represents no influence and 0.97 represents lots of influence. Only has an effect when using an init_image parameter.'
-                  example: ''
-                return_depth_hq:
+                  minimum: 0.11
+                  maximum: 0.9
+                  description: 'Model 3. Inverted influence of init_image. 0.11 is lots of influence, 0.9 is no influence. Only applies when init_image is sent.'
+                  example: 0.5
+              required:
+                - skybox_style_id
+                - prompt
+  /api/v1/skybox/batch:
+    post:
+      summary: 'Submit Skybox Batch'
+      operationId: submitSkyboxBatch
+      description: 'Queue multiple skyboxes in one request. Accepts the same parameters as Generate Skybox, plus quantity. Essential and Standard allow batches up to 3 credits. Business allows up to 30. Free cannot use batches. Model 4 batches also require a Standard or Business plan and variant_id. Only one batch can be in progress per account (409).'
+      parameters:
+        -
+          in: header
+          name: x-api-key
+          description: ''
+          example: '{YOUR_API_KEY}'
+          schema:
+            type: string
+      tags:
+        - Skyboxes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  minimum: 1
+                  description: 'Number of skyboxes to generate. Required. Total credit cost is quantity times credits per generation, and must fit the plan batch cap and the account balance.'
+                  example: 3
+                skybox_style_id:
+                  type: integer
+                  description: 'Style id from Get Skybox Styles. Required.'
+                  example: 155
+                prompt:
+                  type: string
+                  description: 'Text prompt. Maximum 2000 characters, or the style max-char.'
+                  example: 'dark forest'
+                negative_text:
+                  type: string
+                  description: 'Things to avoid. Maximum 600 characters, or the style negative-text-max-char.'
+                enhance_prompt:
                   type: boolean
-                  description: 'Request for high quality depth map. It will be returned in the depth_map_url parameter. (default: false)'
-                  example: ''
+                  description: 'Automatically improve the prompt. Default: false.'
+                  example: false
+                horizon_shift:
+                  type: integer
+                  minimum: -20
+                  maximum: 20
+                  description: 'Model 4 only. Not used for Model 3 generations. Default 0. Range -20 to 20.'
+                  example: 0
+                variant_id:
+                  type: integer
+                  description: 'Required for Model 4 batches. 1 is Balance, 2 is Detail, or another id from the style variants array.'
+                  example: 1
+                soft_lines:
+                  type: boolean
+                  description: 'Model 4 only. Default: false.'
+                  example: false
+                seed:
+                  type: integer
+                  description: '0 for a random seed. Model 3 accepts 1-2147483647. Model 4 accepts 1-4294967295.'
+                  example: 0
+                max_wait:
+                  type: integer
+                  minimum: 30
+                  maximum: 1800
+                  description: 'Per-generation wait limit in seconds. Range 30-1800.'
+                  example: 120
                 webhook_url:
                   type: string
-                  description: 'Optionally, you may specify a webhook url to specify the destination for progress updates'
-                  example: ''
+                  description: 'Optional URL for batch-level status updates. The payload matches the batch object.'
               required:
+                - quantity
+                - skybox_style_id
                 - prompt
+      responses:
+        200:
+          description: 'Batch accepted. status starts at pending. generations lists each queued skybox.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 42
+                  obfuscated_id:
+                    type: string
+                  status:
+                    type: string
+                    description: 'pending, dispatched, processing, finalized, error, or abort.'
+                    example: pending
+                  quantity:
+                    type: integer
+                    example: 3
+                  successfully_submitted:
+                    type: integer
+                    example: 3
+                  completed:
+                    type: integer
+                    example: 0
+                  errored:
+                    type: integer
+                    example: 0
+                  aborted:
+                    type: integer
+                    example: 0
+                  pusher_channel:
+                    type: string
+                  pusher_event:
+                    type: string
+                    example: status_update
+                  webhook_url:
+                    type: string
+                    nullable: true
+                  submission_errors:
+                    type: array
+                    description: 'Generations that failed during submit. Each item has index, message, and status.'
+                    items:
+                      type: object
+                  generations:
+                    type: array
+                    items:
+                      type: object
+        403:
+          description: 'No active subscription, or batch generation is not available on the current plan.'
+        404:
+          description: 'Skybox style does not exist.'
+        409:
+          description: 'A batch is already being processed for this account.'
+        422:
+          description: 'Invalid quantity or variant_id, or the batch exceeds the plan credit cap or the account balance.'
+        503:
+          description: 'Generations are temporarily disabled.'
+    get:
+      summary: 'Get Skybox Batches'
+      operationId: getSkyboxBatches
+      description: 'Paginated list of batch requests for the account.'
+      parameters:
+        -
+          in: header
+          name: x-api-key
+          description: ''
+          example: '{YOUR_API_KEY}'
+          schema:
+            type: string
+        -
+          in: query
+          name: limit
+          description: 'Results per page. 1-100, default 18.'
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 18
+        -
+          in: query
+          name: offset
+          description: 'Records to skip. Default 0.'
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        -
+          in: query
+          name: order
+          description: 'ASC or DESC. Default DESC.'
+          required: false
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+            default: DESC
+        -
+          in: query
+          name: status
+          description: 'Filter by batch status.'
+          required: false
+          schema:
+            type: string
+            enum:
+              - pending
+              - dispatched
+              - processing
+              - finalized
+              - error
+              - abort
+        -
+          in: query
+          name: batch_id
+          description: 'Filter to one batch id.'
+          required: false
+          schema:
+            type: integer
+      tags:
+        - Skyboxes
+      responses:
+        200:
+          description: 'A page of batches in data, with pagination metadata.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
   /api/v1/skybox/styles:
     get:
       summary: 'Get Skybox Styles'
@@ -218,12 +466,12 @@ paths:
         -
           in: query
           name: model_version
-          description: 'Filter skybox styles by model version number (ie. "2" or "3")'
+          description: 'Filter skybox styles by model version number ("3" or "4"). Model 2 is discontinued.'
           example: ''
           required: false
           schema:
             type: string
-            description: 'Filter skybox styles by model version number (ie. "2" or "3")'
+            description: 'Filter skybox styles by model version number ("3" or "4"). Model 2 is discontinued.'
             example: ''
         -
           in: header

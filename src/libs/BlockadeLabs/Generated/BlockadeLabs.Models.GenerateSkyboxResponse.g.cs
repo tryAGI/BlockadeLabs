@@ -189,11 +189,27 @@ namespace BlockadeLabs
 
         /// <summary>
         /// Skybox style name used in a generation request<br/>
-        /// Example: V2 Fantasy Lands
+        /// Example: Open World
         /// </summary>
-        /// <example>V2 Fantasy Lands</example>
+        /// <example>Open World</example>
         [global::System.Text.Json.Serialization.JsonPropertyName("skybox_style_name")]
         public string? SkyboxStyleName { get; set; }
+
+        /// <summary>
+        /// Quality variant used for a Model 4 generation. Omitted for Model 3.<br/>
+        /// Example: 1
+        /// </summary>
+        /// <example>1</example>
+        [global::System.Text.Json.Serialization.JsonPropertyName("variant_id")]
+        public int? VariantId { get; set; }
+
+        /// <summary>
+        /// Model used for the generation.<br/>
+        /// Example: Model 4
+        /// </summary>
+        /// <example>Model 4</example>
+        [global::System.Text.Json.Serialization.JsonPropertyName("model")]
+        public string? Model { get; set; }
 
         /// <summary>
         /// Example: V2 Fantasy Lands
@@ -297,7 +313,15 @@ namespace BlockadeLabs
         /// </param>
         /// <param name="skyboxStyleName">
         /// Skybox style name used in a generation request<br/>
-        /// Example: V2 Fantasy Lands
+        /// Example: Open World
+        /// </param>
+        /// <param name="variantId">
+        /// Quality variant used for a Model 4 generation. Omitted for Model 3.<br/>
+        /// Example: 1
+        /// </param>
+        /// <param name="model">
+        /// Model used for the generation.<br/>
+        /// Example: Model 4
         /// </param>
         /// <param name="skyboxName">
         /// Example: V2 Fantasy Lands
@@ -331,6 +355,8 @@ namespace BlockadeLabs
             int? skyboxStyleId,
             int? skyboxId,
             string? skyboxStyleName,
+            int? variantId,
+            string? model,
             string? skyboxName)
         {
             this.Id = id;
@@ -358,6 +384,8 @@ namespace BlockadeLabs
             this.SkyboxStyleId = skyboxStyleId;
             this.SkyboxId = skyboxId;
             this.SkyboxStyleName = skyboxStyleName;
+            this.VariantId = variantId;
+            this.Model = model;
             this.SkyboxName = skyboxName;
         }
 

@@ -42,15 +42,15 @@ namespace BlockadeLabs
         /// <summary>
         ///
         /// </summary>
-        public string? Type1 { get; set; }
+        public int? Type1 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public bool? Type2 { get; set; }
+        public string? Type2 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public int? Type3 { get; set; }
+        public bool? Type3 { get; set; }
         /// <summary>
         ///
         /// </summary>
@@ -62,115 +62,147 @@ namespace BlockadeLabs
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.RequestExportRequest? Type6 { get; set; }
+        public global::BlockadeLabs.SubmitSkyboxBatchRequest? Type6 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GenerateSkyboxResponse? Type7 { get; set; }
+        public global::BlockadeLabs.RequestExportRequest? Type7 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::System.Collections.Generic.IList<global::BlockadeLabs.GetSkyboxStylesResponseItem>? Type8 { get; set; }
+        public global::BlockadeLabs.GetSkyboxBatchesOrder? Type8 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetSkyboxStylesResponseItem? Type9 { get; set; }
+        public global::BlockadeLabs.GetSkyboxBatchesStatus? Type9 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::System.Collections.Generic.IList<global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItem>? Type10 { get; set; }
+        public global::BlockadeLabs.GenerateSkyboxResponse? Type10 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItem? Type11 { get; set; }
+        public global::BlockadeLabs.SubmitSkyboxBatchResponse? Type11 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::System.Collections.Generic.IList<global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItemItem>? Type12 { get; set; }
+        public global::System.Collections.Generic.IList<object>? Type12 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItemItem? Type13 { get; set; }
+        public object? Type13 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetSkyboxByIdResponse? Type14 { get; set; }
+        public global::BlockadeLabs.GetSkyboxBatchesResponse? Type14 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetSkyboxByIdResponseRequest? Type15 { get; set; }
+        public global::System.Collections.Generic.IList<global::BlockadeLabs.GetSkyboxStylesResponseItem>? Type15 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.CancelGenerationResponse? Type16 { get; set; }
+        public global::BlockadeLabs.GetSkyboxStylesResponseItem? Type16 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetSkyboxByObfuscatedIdResponse? Type17 { get; set; }
+        public global::System.Collections.Generic.IList<global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItem>? Type17 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetSkyboxByObfuscatedIdResponseRequest? Type18 { get; set; }
+        public global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItem? Type18 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetHistoryResponse? Type19 { get; set; }
+        public global::System.Collections.Generic.IList<global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItemItem>? Type19 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::System.Collections.Generic.IList<global::BlockadeLabs.GetHistoryResponseDataItem>? Type20 { get; set; }
+        public global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItemItem? Type20 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetHistoryResponseDataItem? Type21 { get; set; }
+        public global::BlockadeLabs.GetSkyboxByIdResponse? Type21 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.CancelAllPendingGenerationsResponse? Type22 { get; set; }
+        public global::BlockadeLabs.GetSkyboxByIdResponseRequest? Type22 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.DeleteResponse? Type23 { get; set; }
+        public global::BlockadeLabs.CancelGenerationResponse? Type23 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::System.Collections.Generic.IList<global::BlockadeLabs.GetExportTypesResponseItem>? Type24 { get; set; }
+        public global::BlockadeLabs.GetSkyboxByObfuscatedIdResponse? Type24 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetExportTypesResponseItem? Type25 { get; set; }
+        public global::BlockadeLabs.GetSkyboxByObfuscatedIdResponseRequest? Type25 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.RequestExportResponse? Type26 { get; set; }
+        public global::BlockadeLabs.GetHistoryResponse? Type26 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.GetExportRequestResponse? Type27 { get; set; }
+        public global::System.Collections.Generic.IList<global::BlockadeLabs.GetHistoryResponseDataItem>? Type27 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::BlockadeLabs.CancelExportRequestResponse? Type28 { get; set; }
+        public global::BlockadeLabs.GetHistoryResponseDataItem? Type28 { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        public global::BlockadeLabs.CancelAllPendingGenerationsResponse? Type29 { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        public global::BlockadeLabs.DeleteResponse? Type30 { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        public global::System.Collections.Generic.IList<global::BlockadeLabs.GetExportTypesResponseItem>? Type31 { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        public global::BlockadeLabs.GetExportTypesResponseItem? Type32 { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        public global::BlockadeLabs.RequestExportResponse? Type33 { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        public global::BlockadeLabs.GetExportRequestResponse? Type34 { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        public global::BlockadeLabs.CancelExportRequestResponse? Type35 { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public global::System.Collections.Generic.List<global::BlockadeLabs.GetSkyboxStylesResponseItem>? ListType0 { get; set; }
+        public global::System.Collections.Generic.List<object>? ListType0 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::System.Collections.Generic.List<global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItem>? ListType1 { get; set; }
+        public global::System.Collections.Generic.List<global::BlockadeLabs.GetSkyboxStylesResponseItem>? ListType1 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::System.Collections.Generic.List<global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItemItem>? ListType2 { get; set; }
+        public global::System.Collections.Generic.List<global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItem>? ListType2 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::System.Collections.Generic.List<global::BlockadeLabs.GetHistoryResponseDataItem>? ListType3 { get; set; }
+        public global::System.Collections.Generic.List<global::BlockadeLabs.GetSkyboxStyleFamiliesResponseItemItem>? ListType3 { get; set; }
         /// <summary>
         ///
         /// </summary>
-        public global::System.Collections.Generic.List<global::BlockadeLabs.GetExportTypesResponseItem>? ListType4 { get; set; }
+        public global::System.Collections.Generic.List<global::BlockadeLabs.GetHistoryResponseDataItem>? ListType4 { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        public global::System.Collections.Generic.List<global::BlockadeLabs.GetExportTypesResponseItem>? ListType5 { get; set; }
     }
 }

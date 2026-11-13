@@ -7,85 +7,122 @@ namespace BlockadeLabs.CLI.Commands;
 
 internal static partial class SkyboxesGenerateSkyboxCommandApiCommand
 {
+    private static Option<int> SkyboxStyleId { get; } = new(
+        name: @"--skybox-style-id")
+    {
+        Description = @"Style id from Get Skybox Styles. Chooses the model version and the aesthetic. Required.",
+        Required = true,
+    };
+
     private static Option<string> Prompt { get; } = new(
         name: @"--prompt")
     {
-        Description = @"Text prompt describing the skybox world you wish to create. Maximum number of characters: 550. If you are using skybox_style_id then the maximum number of characters is defined in the max-char response parameter defined for each style.",
+        Description = @"Text prompt describing the skybox world you wish to create. Maximum number of characters: 2000, or the max-char value returned for the chosen style.",
         Required = true,
     };
 
     private static Option<string?> NegativeText { get; } = new(
         name: @"--negative-text")
     {
-        Description = @"Describe things to avoid in the skybox world you wish to create. Maximum number of characters: 200. If you are using skybox_style_id then the maximum number of characters is defined in the negative-text-max-char response parameter defined for each style.",
+        Description = @"Things to avoid. Maximum number of characters: 600, or the negative-text-max-char value returned for the chosen style.",
     };
 
     private static Option<bool?> EnhancePrompt { get; } = CliRuntime.CreateNullableBoolOption(
         name: @"--enhance-prompt",
-        description: @"Have an AI automatically improve your prompt to generate pro-level results every time (default: false)");
+        description: @"Have an AI automatically improve the prompt (default: false).");
+
+    private static Option<int?> HorizonShift { get; } = new(
+        name: @"--horizon-shift")
+    {
+        Description = @"Model 4 only. Not used for Model 3 generations. Defaults to 0. Negative shifts the horizon down, positive shifts it up. Accepted range: -20 to 20.",
+    };
+
+    private static Option<int?> VariantId { get; } = new(
+        name: @"--variant-id")
+    {
+        Description = @"Model 4 quality variant from the variants array on Get Skybox Styles. 1 is Balance (3 credits, about 60s). 2 is Detail (6 credits, about 120s). If omitted, the style default is used. Required for Model 4 batches. Model 4 variants require a Standard or Business plan.",
+    };
+
+    private static Option<bool?> SoftLines { get; } = CliRuntime.CreateNullableBoolOption(
+        name: @"--soft-lines",
+        description: @"Model 4 only. Softer line rendering while preserving structural geometry. Default: false.");
 
     private static Option<int?> Seed { get; } = new(
         name: @"--seed")
     {
-        Description = @"Send 0 for a random seed generation. Any other number (1-2147483647) set will be used to ""freeze"" the image generator and create similar images when run again with the same seed and settings.",
+        Description = @"Send 0 for a random seed. Any other number freezes the generator for a similar result with the same settings. Model 3 accepts 1-2147483647. Model 4 accepts 1-4294967295.",
     };
 
-    private static Option<int?> SkyboxStyleId { get; } = new(
-        name: @"--skybox-style-id")
+    private static Option<string?> WebhookUrl { get; } = new(
+        name: @"--webhook-url")
     {
-        Description = @"Predefined styles that influence the overall aesthetic of your skybox generation (Fantasy landscape, Anime art style, etc...).",
+        Description = @"Optional URL for generation progress updates.",
+    };
+
+    private static Option<int?> MaxWait { get; } = new(
+        name: @"--max-wait")
+    {
+        Description = @"Maximum seconds to wait for the generation. If it does not finish in time, status is set to error and credits are refunded. Accepted range: 30-1800. Model 3 and Model 4.",
     };
 
     private static Option<int?> RemixImagineId { get; } = new(
         name: @"--remix-imagine-id")
     {
-        Description = @"ID of a previously generated skybox",
+        Description = @"Model 3. ID of a previously generated skybox to remix.",
+    };
+
+    private static Option<int?> RemixCollectionId { get; } = new(
+        name: @"--remix-collection-id")
+    {
+        Description = @"Model 3. ID of a project created in the web app. A random skybox from that project is used as the remix starting point.",
     };
 
     private static Option<byte[]?> ControlImage { get; } = new(
         name: @"--control-image")
     {
-        Description = @"Control image used to influence the generation. The image needs to be exacly 1024 pixels wide and 512 pixels tall PNG equirectangular projection image of a scribble with black (#00000) background and white (#ffffff) brush strokes. For ""scribble"" effect you will also need to send control_model=""scribble"".",
+        Description = @"Model 3. Control image (binary, Base64, or absolute URL) that influences structure. Use with control_model set to remix.",
     };
 
     private static Option<string?> ControlImagename { get; } = new(
         name: @"--control-imagename")
     {
-        Description = @"Control image used to influence the generation. The image needs to be exacly 1024 pixels wide and 512 pixels tall PNG equirectangular projection image of a scribble with black (#00000) background and white (#ffffff) brush strokes. For ""scribble"" effect you will also need to send control_model=""scribble"".",
+        Description = @"Model 3. Control image (binary, Base64, or absolute URL) that influences structure. Use with control_model set to remix.",
+    };
+
+    private static Option<string?> ControlImageHash { get; } = new(
+        name: @"--control-image-hash")
+    {
+        Description = @"Model 3. obfuscated_id of an existing skybox whose control image should be reused, instead of uploading control_image again.",
     };
 
     private static Option<string?> ControlModel { get; } = new(
         name: @"--control-model")
     {
-        Description = @"Model used for the control_image. Currently, the only option is: ""scribble"".",
+        Description = @"Model 3. Model used for control_image. The only option is ""remix"".",
     };
 
     private static Option<byte[]?> InitImage { get; } = new(
         name: @"--init-image")
     {
-        Description = @"Image (Binary/Base64 string/Absolute URL) to be used as initial image for Skybox generation. Please use equirectangular 360° images. 2:1 aspect ratio recommended. Maximum file size is 50 megabytes.",
+        Description = @"Model 3. Init image (binary, Base64, or absolute URL). Equirectangular images. Guides color and composition.",
     };
 
     private static Option<string?> InitImagename { get; } = new(
         name: @"--init-imagename")
     {
-        Description = @"Image (Binary/Base64 string/Absolute URL) to be used as initial image for Skybox generation. Please use equirectangular 360° images. 2:1 aspect ratio recommended. Maximum file size is 50 megabytes.",
+        Description = @"Model 3. Init image (binary, Base64, or absolute URL). Equirectangular images. Guides color and composition.",
+    };
+
+    private static Option<string?> InitImageHash { get; } = new(
+        name: @"--init-image-hash")
+    {
+        Description = @"Model 3. obfuscated_id of an existing skybox whose init image should be reused, instead of uploading init_image again.",
     };
 
     private static Option<double?> InitStrength { get; } = new(
         name: @"--init-strength")
     {
-        Description = @"Scale to be used as initial influence of the ""Init Image"" for Skybox generation. The default value is 0, allowed range is between 0 and 0.97, where 0 represents no influence and 0.97 represents lots of influence. Only has an effect when using an init_image parameter.",
-    };
-
-    private static Option<bool?> ReturnDepthHq { get; } = CliRuntime.CreateNullableBoolOption(
-        name: @"--return-depth-hq",
-        description: @"Request for high quality depth map. It will be returned in the depth_map_url parameter. (default: false)");
-
-    private static Option<string?> WebhookUrl { get; } = new(
-        name: @"--webhook-url")
-    {
-        Description = @"Optionally, you may specify a webhook url to specify the destination for progress updates",
+        Description = @"Model 3. Inverted influence of init_image. 0.11 is lots of influence, 0.9 is no influence. Only applies when init_image is sent.",
     };
       private static Option<string?> Input { get; } = new(@"--input")
       {
@@ -129,21 +166,27 @@ internal static partial class SkyboxesGenerateSkyboxCommandApiCommand
     public static Command Create(string? commandName = null)
     {
         var command = new Command(commandName ?? @"generate-skybox", @"Generate Skybox
-Used for generating skyboxes, skybox remixes and depth maps.");
+Generate a Model 3 or Model 4 skybox on the same endpoint. Send application/json, or multipart/form-data when uploading an image. Model 4 styles and variant_id require a Standard or Business plan (Essential and Free receive 403). Remix, control, and init parameters are documented for Model 3. Model 2 is discontinued.");
+                        command.Options.Add(SkyboxStyleId);
                         command.Options.Add(Prompt);
                         command.Options.Add(NegativeText);
                         command.Options.Add(EnhancePrompt);
+                        command.Options.Add(HorizonShift);
+                        command.Options.Add(VariantId);
+                        command.Options.Add(SoftLines);
                         command.Options.Add(Seed);
-                        command.Options.Add(SkyboxStyleId);
+                        command.Options.Add(WebhookUrl);
+                        command.Options.Add(MaxWait);
                         command.Options.Add(RemixImagineId);
+                        command.Options.Add(RemixCollectionId);
                         command.Options.Add(ControlImage);
                         command.Options.Add(ControlImagename);
+                        command.Options.Add(ControlImageHash);
                         command.Options.Add(ControlModel);
                         command.Options.Add(InitImage);
                         command.Options.Add(InitImagename);
+                        command.Options.Add(InitImageHash);
                         command.Options.Add(InitStrength);
-                        command.Options.Add(ReturnDepthHq);
-                        command.Options.Add(WebhookUrl);
           command.Options.Add(Input);
           command.Options.Add(RequestJson);
           command.Options.Add(RequestFile);
@@ -169,38 +212,50 @@ Used for generating skyboxes, skybox remixes and depth maps.");
                             RequestFile,
                             global::BlockadeLabs.SourceGenerationContext.Default,
                             cancellationToken).ConfigureAwait(false);
+                        var skyboxStyleId = parseResult.GetRequiredValue(SkyboxStyleId);
                         var prompt = parseResult.GetRequiredValue(Prompt);
                         var negativeText = CliRuntime.WasSpecified(parseResult, NegativeText) ? parseResult.GetValue(NegativeText) : (__requestBase is { } __NegativeTextBaseValue ? __NegativeTextBaseValue.NegativeText : default);
                         var enhancePrompt = CliRuntime.WasSpecified(parseResult, EnhancePrompt) ? parseResult.GetValue(EnhancePrompt) : (__requestBase is { } __EnhancePromptBaseValue ? __EnhancePromptBaseValue.EnhancePrompt : default);
+                        var horizonShift = CliRuntime.WasSpecified(parseResult, HorizonShift) ? parseResult.GetValue(HorizonShift) : (__requestBase is { } __HorizonShiftBaseValue ? __HorizonShiftBaseValue.HorizonShift : default);
+                        var variantId = CliRuntime.WasSpecified(parseResult, VariantId) ? parseResult.GetValue(VariantId) : (__requestBase is { } __VariantIdBaseValue ? __VariantIdBaseValue.VariantId : default);
+                        var softLines = CliRuntime.WasSpecified(parseResult, SoftLines) ? parseResult.GetValue(SoftLines) : (__requestBase is { } __SoftLinesBaseValue ? __SoftLinesBaseValue.SoftLines : default);
                         var seed = CliRuntime.WasSpecified(parseResult, Seed) ? parseResult.GetValue(Seed) : (__requestBase is { } __SeedBaseValue ? __SeedBaseValue.Seed : default);
-                        var skyboxStyleId = CliRuntime.WasSpecified(parseResult, SkyboxStyleId) ? parseResult.GetValue(SkyboxStyleId) : (__requestBase is { } __SkyboxStyleIdBaseValue ? __SkyboxStyleIdBaseValue.SkyboxStyleId : default);
+                        var webhookUrl = CliRuntime.WasSpecified(parseResult, WebhookUrl) ? parseResult.GetValue(WebhookUrl) : (__requestBase is { } __WebhookUrlBaseValue ? __WebhookUrlBaseValue.WebhookUrl : default);
+                        var maxWait = CliRuntime.WasSpecified(parseResult, MaxWait) ? parseResult.GetValue(MaxWait) : (__requestBase is { } __MaxWaitBaseValue ? __MaxWaitBaseValue.MaxWait : default);
                         var remixImagineId = CliRuntime.WasSpecified(parseResult, RemixImagineId) ? parseResult.GetValue(RemixImagineId) : (__requestBase is { } __RemixImagineIdBaseValue ? __RemixImagineIdBaseValue.RemixImagineId : default);
+                        var remixCollectionId = CliRuntime.WasSpecified(parseResult, RemixCollectionId) ? parseResult.GetValue(RemixCollectionId) : (__requestBase is { } __RemixCollectionIdBaseValue ? __RemixCollectionIdBaseValue.RemixCollectionId : default);
                         var controlImage = CliRuntime.WasSpecified(parseResult, ControlImage) ? parseResult.GetValue(ControlImage) : (__requestBase is { } __ControlImageBaseValue ? __ControlImageBaseValue.ControlImage : default);
                         var controlImagename = CliRuntime.WasSpecified(parseResult, ControlImagename) ? parseResult.GetValue(ControlImagename) : (__requestBase is { } __ControlImagenameBaseValue ? __ControlImagenameBaseValue.ControlImagename : default);
+                        var controlImageHash = CliRuntime.WasSpecified(parseResult, ControlImageHash) ? parseResult.GetValue(ControlImageHash) : (__requestBase is { } __ControlImageHashBaseValue ? __ControlImageHashBaseValue.ControlImageHash : default);
                         var controlModel = CliRuntime.WasSpecified(parseResult, ControlModel) ? parseResult.GetValue(ControlModel) : (__requestBase is { } __ControlModelBaseValue ? __ControlModelBaseValue.ControlModel : default);
                         var initImage = CliRuntime.WasSpecified(parseResult, InitImage) ? parseResult.GetValue(InitImage) : (__requestBase is { } __InitImageBaseValue ? __InitImageBaseValue.InitImage : default);
                         var initImagename = CliRuntime.WasSpecified(parseResult, InitImagename) ? parseResult.GetValue(InitImagename) : (__requestBase is { } __InitImagenameBaseValue ? __InitImagenameBaseValue.InitImagename : default);
+                        var initImageHash = CliRuntime.WasSpecified(parseResult, InitImageHash) ? parseResult.GetValue(InitImageHash) : (__requestBase is { } __InitImageHashBaseValue ? __InitImageHashBaseValue.InitImageHash : default);
                         var initStrength = CliRuntime.WasSpecified(parseResult, InitStrength) ? parseResult.GetValue(InitStrength) : (__requestBase is { } __InitStrengthBaseValue ? __InitStrengthBaseValue.InitStrength : default);
-                        var returnDepthHq = CliRuntime.WasSpecified(parseResult, ReturnDepthHq) ? parseResult.GetValue(ReturnDepthHq) : (__requestBase is { } __ReturnDepthHqBaseValue ? __ReturnDepthHqBaseValue.ReturnDepthHq : default);
-                        var webhookUrl = CliRuntime.WasSpecified(parseResult, WebhookUrl) ? parseResult.GetValue(WebhookUrl) : (__requestBase is { } __WebhookUrlBaseValue ? __WebhookUrlBaseValue.WebhookUrl : default);
                 using var client = await CliRuntime.CreateClientAsync(parseResult, cancellationToken).ConfigureAwait(false);
 
 
                                 var response = await client.Skyboxes.GenerateSkyboxAsync(
+                                    skyboxStyleId: skyboxStyleId,
                                     prompt: prompt,
                                     negativeText: negativeText,
                                     enhancePrompt: enhancePrompt,
+                                    horizonShift: horizonShift,
+                                    variantId: variantId,
+                                    softLines: softLines,
                                     seed: seed,
-                                    skyboxStyleId: skyboxStyleId,
+                                    webhookUrl: webhookUrl,
+                                    maxWait: maxWait,
                                     remixImagineId: remixImagineId,
+                                    remixCollectionId: remixCollectionId,
                                     controlImage: controlImage,
                                     controlImagename: controlImagename,
+                                    controlImageHash: controlImageHash,
                                     controlModel: controlModel,
                                     initImage: initImage,
                                     initImagename: initImagename,
+                                    initImageHash: initImageHash,
                                     initStrength: initStrength,
-                                    returnDepthHq: returnDepthHq,
-                                    webhookUrl: webhookUrl,
                                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
 
