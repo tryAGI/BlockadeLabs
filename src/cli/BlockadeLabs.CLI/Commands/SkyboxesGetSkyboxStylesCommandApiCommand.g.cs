@@ -10,7 +10,7 @@ internal static partial class SkyboxesGetSkyboxStylesCommandApiCommand
     private static Option<string?> ModelVersion { get; } = new(
         name: @"--model-version")
     {
-        Description = @"Filter skybox styles by model version number (ie. ""2"" or ""3"")",
+        Description = @"Filter skybox styles by model version number (""3"" or ""4""). Model 2 is discontinued.",
     };
 
                     private static string FormatResponse(ParseResult parseResult, global::System.Collections.Generic.IList<global::BlockadeLabs.GetSkyboxStylesResponseItem> value, global::System.Text.Json.Serialization.JsonSerializerContext context, bool truncateLongStrings)

@@ -46,7 +46,7 @@ namespace BlockadeLabs
         /// Returns the list of predefined styles that can influence the overall aesthetic of your skybox generation.
         /// </summary>
         /// <param name="modelVersion">
-        /// Filter skybox styles by model version number (ie. "2" or "3")
+        /// Filter skybox styles by model version number ("3" or "4"). Model 2 is discontinued.
         /// </param>
         /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
@@ -69,7 +69,7 @@ namespace BlockadeLabs
         /// Returns the list of predefined styles that can influence the overall aesthetic of your skybox generation.
         /// </summary>
         /// <param name="modelVersion">
-        /// Filter skybox styles by model version number (ie. "2" or "3")
+        /// Filter skybox styles by model version number ("3" or "4"). Model 2 is discontinued.
         /// </param>
         /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
